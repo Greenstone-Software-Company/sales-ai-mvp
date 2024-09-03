@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import { errorHandler } from './middlewares/errorHandler';
+import { connectToRedis } from './config/redis'; // Import the Redis connection function
+import { connectToDatabase } from './config/database'; // Import the MongoDB connection function
 
 dotenv.config();
 
@@ -18,9 +20,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI as string)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+connectToDatabase();
+
+// Connect to Redis
+connectToRedis();
+
+// Basic test route to ensure server is working
+app.get('/', (req, res) => {
+  res.send('Server is up and running!');
+});
 
 // Routes
 // TODO: Add routes here
