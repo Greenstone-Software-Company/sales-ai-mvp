@@ -1,0 +1,30 @@
+# File: .github/workflows/lint-and-test.yml
+name: Lint and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Install dependencies
+      run: |
+        cd packages/client && npm ci
+        cd ../server && npm ci
+    - name: Run linting
+      run: |
+        cd packages/client && npm run lint
+        cd ../server && npm run lint
+    - name: Run tests
+      run: |
+        cd packages/client && npm test
+        cd ../server && npm test
