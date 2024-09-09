@@ -109,4 +109,5 @@ out/
 .DS_Store
 
 # Windows
-Thumbs.db
+Thumbs.db".env.local" 
+".env.local" 
