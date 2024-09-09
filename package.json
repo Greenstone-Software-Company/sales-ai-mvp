@@ -3,17 +3,21 @@
     "version": "1.0.0",
     "private": true,
     "workspaces": [
-      "packages/*"
+        "packages/*"
     ],
     "scripts": {
-      "start": "lerna run start --stream",
-      "build": "lerna run build --stream",
-      "test": "lerna run test --stream",
-      "lint": "lerna run lint --stream",
-      "clean": "lerna clean --yes && rm -rf node_modules"
+        "start": "lerna run start --stream",
+        "build": "lerna run build --stream",
+        "test": "lerna run test --stream",
+        "lint": "lerna run lint --stream",
+        "clean": "lerna clean --yes && rm -rf node_modules"
     },
     "devDependencies": {
-      "lerna": "^4.0.0"
+        "lerna": "^8.1.8"
+    },
+    "dependencies": {
+        "@tensorflow/tfjs-node": "^4.21.0",
+        "openai": "^4.58.1",
+        "react-scripts": "^5.0.1"
     }
-  }
-  
+}
