@@ -1,20 +1,24 @@
-# First stage: build the app
-FROM node:18-alpine AS builder
+# Use Node.js 18 as the base image
+FROM node:18-alpine
+
+# Set the working directory in the container to /app
 WORKDIR /app
+
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
-RUN npm install --legacy-peer-deps  # You can switch back to `npm ci` if a package-lock.json exists
+
+# Install the application dependencies
+RUN npm install -g npm@latest
+RUN npm install --legacy-peer-deps
+
+# Copy the rest of the application code to the working directory
 COPY . .
+
+# Build the application
 RUN npm run build
 
-# Second stage: run the app
-FROM node:18-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV production
-COPY --from=builder /app/next.config.js ./  
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-
+# Expose port 3000 for the application
 EXPOSE 3000
+
+# Define the command to run the application
 CMD ["npm", "start"]

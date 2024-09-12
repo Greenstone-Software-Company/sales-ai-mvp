@@ -1,4 +1,11 @@
- 
+ # Next.js
+/.next/
+/out/
+
+# Local env files
+.env*.local
+
+
 # Dependency directories
 node_modules/
 jspm_packages/

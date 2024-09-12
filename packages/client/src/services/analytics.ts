@@ -1,17 +1,25 @@
 import * as Sentry from "@sentry/react";
 import Mixpanel from './mixpanel';
-import logger from './logger'; // You need to set up a logger (e.g., Winston)
+import logger from './logger';
+
+interface EventProperties {
+  [key: string]: string | number | boolean;
+}
+
+interface UserProperties {
+  [key: string]: string | number | boolean;
+}
 
 export const Analytics = {
-  trackEvent: (eventName: string, properties?: any) => {
+  trackEvent: (eventName: string, properties?: EventProperties) => {
     Mixpanel.track(eventName, properties);
     logger.info(`Event: ${eventName}`, properties);
   },
-  captureException: (error: Error, context?: any) => {
+  captureException: (error: Error, context?: Record<string, unknown>) => {
     Sentry.captureException(error, { extra: context });
     logger.error(`Error: ${error.message}`, { error, context });
   },
-  setUserProperties: (userId: string, properties: any) => {
+  setUserProperties: (userId: string, properties: UserProperties) => {
     Mixpanel.identify(userId);
     Mixpanel.people.set(properties);
     Sentry.setUser({ id: userId, ...properties });

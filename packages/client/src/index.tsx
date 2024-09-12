@@ -1,18 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import * as Sentry from "@sentry/react";
-import { BrowserTracing } from "@sentry/tracing";
 import App from './App';
 
 Sentry.init({
-  dsn: "YOUR_SENTRY_DSN", // Replace with your actual DSN from Sentry
-  integrations: [new BrowserTracing()],
-  tracesSampleRate: 1.0, // Adjust this to control the sampling rate
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  integrations: [],
+  tracesSampleRate: 1.0,
 });
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}

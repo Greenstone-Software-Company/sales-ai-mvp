@@ -1,16 +1,20 @@
 import mixpanel from 'mixpanel-browser';
 
-mixpanel.init('YOUR_MIXPANEL_TOKEN'); // Replace with your actual Mixpanel token
+mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN || '');
+
+interface Properties {
+  [key: string]: string | number | boolean;
+}
 
 const Mixpanel = {
   identify: (id: string) => {
     mixpanel.identify(id);
   },
-  track: (name: string, props?: any) => {
+  track: (name: string, props?: Properties) => {
     mixpanel.track(name, props);
   },
   people: {
-    set: (props: any) => {
+    set: (props: Properties) => {
       mixpanel.people.set(props);
     },
   },
