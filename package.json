@@ -1,19 +1,28 @@
 {
-    "name": "sales-ai-mvp",
-    "version": "1.0.0",
-    "private": true,
-    "workspaces": [
-      "packages/*"
-    ],
-    "scripts": {
-      "start": "lerna run start --stream",
-      "build": "lerna run build --stream",
-      "test": "lerna run test --stream",
-      "lint": "lerna run lint --stream",
-      "clean": "lerna clean --yes && rm -rf node_modules"
-    },
-    "devDependencies": {
-      "lerna": "^4.0.0"
-    }
+  "name": "sales-ai-mvp",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "lerna run start --stream",
+    "build": "lerna run build --stream",
+    "test": "lerna run test --stream",
+    "lint": "lerna run lint --stream --",
+    "clean": "lerna clean --yes && rimraf node_modules",
+    "postinstall": "lerna run --stream prepare",
+    "install:all": "npm install && lerna exec -- npm install"
+  },
+  "devDependencies": {
+    "@types/mixpanel-browser": "^2.50.0",
+    "lerna": "^8.1.8",
+    "rimraf": "^5.0.5"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.21.0",
+    "dotenv": "^16.4.5",
+    "openai": "^4.58.1",
+    "react-scripts": "^5.0.1"
   }
-  
+}
